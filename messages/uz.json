@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "title": "Mis stend — PK ehtiyot qismlari",
+    "description": "So‘mda katalog, moslik tekshiruvi bilan konstruktor va FPS bahosi."
+  },
+  "nav": {
+    "shop": "Mis stend",
+    "home": "Vitrina",
+    "catalog": "Katalog",
+    "builder": "Stend",
+    "cart": "Savat"
+  },
+  "theme": {
+    "light": "Yorug‘ mavzu",
+    "dark": "Qorong‘i mavzu"
+  },
+  "home": {
+    "kicker": "Toshkent · ehtiyot qismlar so‘mda",
+    "title": "Tizimni stol ustida turganidek yig‘ing.",
+    "lead": "Soket va xotirani tekshiradigan katalog, stendda 3D korpus va FPS bahosi. To‘lov cheki Telegramga ketadi.",
+    "ctaBuilder": "Stendni ochish",
+    "ctaCatalog": "Katalogni ko‘rish",
+    "benchTitle": "Stend nima qiladi",
+    "bench1": "Soket, DDR, karta uzunligi, minora balandligi, M.2/SATA portlari va BP zaxirasi.",
+    "bench2": "Past, o‘rta, yuqori va ultra — FPS modeli, o‘yin ichidagi o‘lchov emas.",
+    "featured": "Vitrinadan"
+  },
+  "catalog": {
+    "title": "Katalog",
+    "all": "Barcha mahsulotlar",
+    "empty": "Bu javonda hozircha bo‘sh.",
+    "stock": "omborda",
+    "add": "Savatga",
+    "added": "Savatda",
+    "open": "Kartochka",
+    "price": "Narx"
+  },
+  "product": {
+    "specs": "Xususiyatlar",
+    "back": "Katalogga",
+    "addToBuild": "Stendga"
+  },
+  "cart": {
+    "title": "Savat",
+    "empty": "Savat bo‘sh. Katalogdan qism oling yoki stenddagi tayyor yig‘mani qo‘shing.",
+    "total": "Jami",
+    "remove": "Olib tashlash",
+    "qty": "dona",
+    "checkoutTitle": "Chekni yuborish",
+    "checkoutHelp": "Summani sotuvchi kartasiga o‘tkazing va chekni qo‘shing: rasm (JPEG, PNG, WebP) yoki PDF. Fayl kassada saqlanadi va menejerga Telegramga ketadi.",
+    "name": "Ism",
+    "phone": "Telefon",
+    "comment": "Izoh",
+    "receipt": "To‘lov cheki (rasm yoki PDF)",
+    "send": "Buyurtmani yuborish",
+    "sending": "Yuborilmoqda…",
+    "sent": "Chek kassada saqlandi va menejerga Telegramga ketdi.",
+    "saved": "Chek kassada saqlandi. Telegram hali sozlanmagan — chatga ketmadi.",
+    "notConfigured": "Telegram hali sozlanmagan: buyurtma kassada saqlanadi, menejer chatiga TELEGRAM_BOT_TOKEN va TELEGRAM_CHAT_ID bo‘lmaguncha ketmaydi.",
+    "need_receipt": "Chek rasmi yoki PDF ni qo‘shing.",
+    "bad_receipt": "Chek: JPEG, PNG, WebP yoki PDF, 8 MB gacha.",
+    "invalid_contact": "Ism va telefonni yozing.",
+    "empty_cart": "Savat bo‘sh.",
+    "not_configured": "Bot sozlanmagan.",
+    "fail": "Yuborilmadi. Fayl va tarmoqni tekshiring."
+  },
+  "builder": {
+    "title": "Yig‘ish stendi",
+    "lead": "Chapda — katalog slotlari. Protsessor, plata, xotira va qolgan qismlarni tanlang: ular darhol o‘ngdagi 3D korpusda paydo bo‘ladi.",
+    "slotsTitle": "Nimadan yig‘asiz",
+    "slotsHelp": "{total} dan {filled} to‘ldi. Yulduzcha — majburiy slot. Ro‘yxatni oching va katalogdan qism tanlang.",
+    "emptySlot": "Bo‘sh slot",
+    "choose": "Tanlash",
+    "clear": "Yechildi",
+    "total": "Yig‘ma summasi",
+    "addBuild": "Yig‘mani savatga",
+    "addedBuild": "Yig‘ma savatda",
+    "power": "Quvvat hisobi",
+    "draw": "Yuklama",
+    "recommended": "30% zaxira bilan",
+    "ready": "Yig‘ma mos",
+    "notReady": "Avval xatolar va majburiy bo‘sh slotlarni yoping",
+    "fpsTitle": "FPS bahosi",
+    "fpsNote": "CPU/GPU ballari, preset va ruxsat bo‘yicha model. Bu studiya benchmarki emas.",
+    "view3d": "3D",
+    "view2d": "2D",
+    "viewHint": "Korpusni sichqoncha bilan aylantiring. Qism chap slot bilan o‘zgaradi. 2D — yon ko‘rinish.",
+    "needCpuGpu": "Jadvalni ko‘rish uchun protsessor va videokarta qo‘ying.",
+    "resolution": "Ruxsat",
+    "presetLow": "Past",
+    "presetMedium": "O‘rta",
+    "presetHigh": "Yuqori",
+    "presetUltra": "Ultra",
+    "game": "O‘yin",
+    "vram": "VRAM kam",
+    "cpuBound": "CPU ga tiraladi"
+  },
+  "slots": {
+    "cpu": "Protsessor",
+    "motherboard": "Plata",
+    "ram": "Xotira",
+    "gpu": "Videokarta",
+    "storage": "Disk",
+    "storage2": "Ikkinchi disk",
+    "psu": "Quvvat bloki",
+    "case": "Korpus",
+    "cooler": "Sovutish"
+  },
+  "categories": {
+    "cpu": "Protsessorlar",
+    "motherboard": "Ona platalar",
+    "ram": "Operativ xotira",
+    "gpu": "Videokartalar",
+    "storage": "Disklar",
+    "psu": "Quvvat bloklari",
+    "case": "Korpuslar",
+    "cooler": "Sovutish"
+  },
+  "compat": {
+    "errors": "Yig‘ilmaydi",
+    "warnings": "Zaxira yupqa",
+    "socket_cpu_mb": "Protsessor va plata soketi mos emas.",
+    "socket_cooler_mb": "Sovutgich plata soketiga o‘tirmaydi.",
+    "socket_cooler_cpu": "Sovutgich protsessor soketiga mos emas.",
+    "memory_cpu": "Protsessor bu xotira turi bilan ishlamaydi.",
+    "memory_mb": "Plata boshqa xotira turini qabul qiladi.",
+    "ram_slots": "Platada to‘plamdagi plankalardan kam slot bor.",
+    "ram_capacity": "To‘plam hajmi plata limitidan katta.",
+    "form_factor": "Plata bu korpusga sig‘maydi.",
+    "gpu_length": "Videokarta korpusdagi joydan uzun.",
+    "cooler_height": "Minora korpus qopqog‘idan baland.",
+    "aio_size": "Bu radiator uchun korpusda joy yo‘q.",
+    "m2_slots": "Platada M.2 slotlar yetmaydi.",
+    "sata_ports": "Platada SATA portlar yetmaydi.",
+    "same_drive": "Ikki bir xil disk — shunday rejalashtirilganini tekshiring.",
+    "cooler_tdp": "Sovutgich protsessor TDP sidan zaif. Shovqin yoki issiq bo‘ladi.",
+    "psu_underpowered": "Quvvat bloki hisoblangan yuklamani tortmaydi.",
+    "psu_headroom": "Quvvat bloki zaxirasi 15% dan kam."
+  },
+  "footer": {
+    "note": "Narxlar so‘mda. To‘lov cheki — Telegramga foto."
+  }
+}

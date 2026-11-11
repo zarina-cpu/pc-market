@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+model Product {
+  id             String @id @default(cuid())
+  slug           String @unique
+  category       String
+  brand          String
+  nameRu         String
+  nameUz         String
+  descriptionRu  String
+  descriptionUz  String
+  priceUzs       Int
+  stock          Int    @default(8)
+  specs          String
+}
+
+model Game {
+  id          String @id @default(cuid())
+  slug        String @unique
+  nameRu      String
+  nameUz      String
+  cpuWeight   Float
+  gpuWeight   Float
+  baseFps     Int
+  vramLow     Int
+  vramMed     Int
+  vramHigh    Int
+  vramUltra   Int
+}
+
+model Order {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  name        String
+  phone       String
+  comment     String   @default("")
+  items       String
+  totalUzs    Int
+  telegramOk  Boolean  @default(false)
+  receiptFile String   @default("")
+  receiptMime String   @default("")
+  receiptName String   @default("")
+}
