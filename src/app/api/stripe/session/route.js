@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
+import { fulfillStripeOrder } from "@/lib/fulfillStripeOrder";
 import { getStripe, stripeConfigured } from "@/lib/stripe";
+
+export const runtime = "nodejs";
 
 export async function GET(request) {
   if (!stripeConfigured()) {
@@ -12,9 +15,16 @@ export async function GET(request) {
 
   const stripe = getStripe();
   const session = await stripe.checkout.sessions.retrieve(sessionId);
+  const paid = session.payment_status === "paid";
+  const orderId = session.metadata?.orderId || session.client_reference_id;
+
+  if (paid && orderId) {
+    await fulfillStripeOrder(orderId, session.id);
+  }
+
   return NextResponse.json({
     ok: true,
-    paid: session.payment_status === "paid",
+    paid,
     status: session.payment_status,
   });
 }

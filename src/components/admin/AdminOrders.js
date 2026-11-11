@@ -1,8 +1,30 @@
 "use client";
 
+import { useState } from "react";
 import { formatUzs } from "@/lib/money";
 
-export default function AdminOrders({ orders }) {
+export default function AdminOrders({ orders: initialOrders }) {
+  const [orders, setOrders] = useState(initialOrders);
+  const [busyId, setBusyId] = useState("");
+
+  async function resendTelegram(orderId) {
+    setBusyId(orderId);
+    try {
+      const res = await fetch(`/api/admin/orders/${orderId}/telegram`, { method: "POST" });
+      const data = await res.json();
+      if (data.ok) {
+        setOrders((prev) =>
+          prev.map((o) => (o.id === orderId ? { ...o, telegramOk: true } : o)),
+        );
+      } else {
+        alert(data.error || "Не удалось отправить в Telegram");
+      }
+    } catch {
+      alert("Ошибка сети");
+    } finally {
+      setBusyId("");
+    }
+  }
   return (
     <>
       <h1>Заказы</h1>
@@ -22,6 +44,17 @@ export default function AdminOrders({ orders }) {
                 ? `Stripe · ${order.paymentStatus}`
                 : "Перевод с чеком"}{" "}
               · {order.telegramOk ? "Telegram ✓" : "Telegram —"}
+              {!order.telegramOk ? (
+                <button
+                  type="button"
+                  className="btn"
+                  style={{ marginLeft: 8 }}
+                  disabled={busyId === order.id}
+                  onClick={() => resendTelegram(order.id)}
+                >
+                  {busyId === order.id ? "…" : "Отправить в Telegram"}
+                </button>
+              ) : null}
             </p>
             {order.comment ? <p>{order.comment}</p> : null}
             <ul>

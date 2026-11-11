@@ -13,6 +13,9 @@ async function sendTelegramText(caption) {
     body: JSON.stringify({ chat_id: chatId, text: caption.slice(0, 4000) }),
   });
   const json = await res.json();
+  if (!json.ok) {
+    console.error("[telegram] sendMessage:", json.description || res.status);
+  }
   return json.ok;
 }
 

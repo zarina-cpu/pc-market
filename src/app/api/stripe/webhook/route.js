@@ -1,40 +1,9 @@
 import { NextResponse } from "next/server";
-import { orderCaption } from "@/lib/checkoutItems";
+import { fulfillStripeOrder } from "@/lib/fulfillStripeOrder";
 import { prisma } from "@/lib/prisma";
 import { getStripe, stripeConfigured } from "@/lib/stripe";
-import { sendOrderToTelegram, telegramConfigured } from "@/lib/telegram";
 
 export const runtime = "nodejs";
-
-async function fulfillOrder(orderId, stripeSessionId) {
-  const order = await prisma.order.findUnique({ where: { id: orderId } });
-  if (!order) return;
-  if (order.paymentStatus === "paid") return;
-
-  const lines = JSON.parse(order.items || "[]");
-  const caption = orderCaption({
-    name: order.name,
-    phone: order.phone,
-    comment: order.comment,
-    lines,
-    totalUzs: order.totalUzs,
-    paidVia: "stripe",
-  });
-
-  let telegram = { ok: false };
-  if (telegramConfigured()) {
-    telegram = await sendOrderToTelegram({ caption });
-  }
-
-  await prisma.order.update({
-    where: { id: order.id },
-    data: {
-      paymentStatus: "paid",
-      stripeSessionId: stripeSessionId || order.stripeSessionId,
-      telegramOk: telegram.ok,
-    },
-  });
-}
 
 export async function POST(request) {
   if (!stripeConfigured() || !process.env.STRIPE_WEBHOOK_SECRET) {
@@ -63,7 +32,7 @@ export async function POST(request) {
     const session = event.data.object;
     const orderId = session.metadata?.orderId || session.client_reference_id;
     if (orderId && session.payment_status === "paid") {
-      await fulfillOrder(orderId, session.id);
+      await fulfillStripeOrder(orderId, session.id);
     }
   }
 
