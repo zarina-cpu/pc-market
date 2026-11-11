@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
+import { orderCaption, parseCartItems } from "@/lib/checkoutItems";
 import { prisma } from "@/lib/prisma";
-import { sendOrderToTelegram, telegramConfigured } from "@/lib/telegram";
 import { readReceiptFile, saveReceiptFile, validateReceipt } from "@/lib/receipts";
+import { sendOrderToTelegram, telegramConfigured } from "@/lib/telegram";
 
 export async function POST(request) {
   const form = await request.formData();
@@ -19,36 +20,19 @@ export async function POST(request) {
     return NextResponse.json({ ok: false, error: receiptError }, { status: 400 });
   }
 
-  let items;
-  try {
-    items = JSON.parse(itemsRaw);
-  } catch {
-    return NextResponse.json({ ok: false, error: "invalid_items" }, { status: 400 });
-  }
-  if (!Array.isArray(items) || items.length === 0) {
-    return NextResponse.json({ ok: false, error: "empty_cart" }, { status: 400 });
+  const { error, lines, totalUzs } = parseCartItems(itemsRaw);
+  if (error) {
+    return NextResponse.json({ ok: false, error }, { status: 400 });
   }
 
-  const lines = items.map((item) => {
-    const qty = Number(item.qty) || 1;
-    const price = Number(item.priceUzs) || 0;
-    const title = item.nameRu || item.nameUz || item.slug || "позиция";
-    return { title, qty, price, sum: qty * price };
+  const caption = orderCaption({
+    name,
+    phone,
+    comment,
+    lines,
+    totalUzs,
+    paidVia: "manual",
   });
-  const totalUzs = lines.reduce((sum, line) => sum + line.sum, 0);
-
-  const caption = [
-    "Новый заказ — Медный стенд",
-    `Имя: ${name}`,
-    `Телефон: ${phone}`,
-    comment ? `Комментарий: ${comment}` : null,
-    "",
-    ...lines.map((line) => `${line.title} × ${line.qty} — ${line.sum} сум`),
-    "",
-    `Итого: ${totalUzs} сум`,
-  ]
-    .filter((row) => row !== null)
-    .join("\n");
 
   const stored = await saveReceiptFile(receipt);
   let telegram = { ok: false, reason: "not_configured" };
@@ -74,6 +58,8 @@ export async function POST(request) {
       receiptFile: stored.filename,
       receiptMime: stored.mime,
       receiptName: stored.originalName,
+      paymentProvider: "manual",
+      paymentStatus: "paid",
     },
   });
 

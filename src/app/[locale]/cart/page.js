@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import CartView from "@/components/CartView";
 
@@ -11,7 +12,9 @@ export default async function CartPage({ params }) {
       <div className="page-head">
         <h1>{t("title")}</h1>
       </div>
-      <CartView />
+      <Suspense fallback={<p>{t("empty")}</p>}>
+        <CartView />
+      </Suspense>
     </>
   );
 }

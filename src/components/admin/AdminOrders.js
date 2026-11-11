@@ -17,7 +17,12 @@ export default function AdminOrders({ orders }) {
               {new Date(order.createdAt).toLocaleString("ru-RU")} · {order.name} · {order.phone}
             </p>
             <p className="price">{formatUzs(order.totalUzs, "ru")}</p>
-            <p>{order.telegramOk ? "Ушло менеджеру в Telegram" : "В Telegram не ушло, файл в кассе"}</p>
+            <p>
+              {order.paymentProvider === "stripe"
+                ? `Stripe · ${order.paymentStatus}`
+                : "Перевод с чеком"}{" "}
+              · {order.telegramOk ? "Telegram ✓" : "Telegram —"}
+            </p>
             {order.comment ? <p>{order.comment}</p> : null}
             <ul>
               {items.map((item, index) => (

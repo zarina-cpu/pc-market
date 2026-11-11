@@ -37,15 +37,18 @@ model Game {
 }
 
 model Order {
-  id          String   @id @default(cuid())
-  createdAt   DateTime @default(now())
-  name        String
-  phone       String
-  comment     String   @default("")
-  items       String
-  totalUzs    Int
-  telegramOk  Boolean  @default(false)
-  receiptFile String   @default("")
-  receiptMime String   @default("")
-  receiptName String   @default("")
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  name            String
+  phone           String
+  comment         String   @default("")
+  items           String
+  totalUzs        Int
+  telegramOk      Boolean  @default(false)
+  receiptFile     String   @default("")
+  receiptMime     String   @default("")
+  receiptName     String   @default("")
+  paymentProvider String   @default("manual")
+  paymentStatus   String   @default("paid")
+  stripeSessionId String   @default("")
 }

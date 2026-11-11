@@ -4,11 +4,28 @@ export function telegramConfigured() {
   return Boolean(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID);
 }
 
+async function sendTelegramText(caption) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: chatId, text: caption.slice(0, 4000) }),
+  });
+  const json = await res.json();
+  return json.ok;
+}
+
 export async function sendOrderToTelegram({ caption, file, mime, originalName }) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) {
     return { ok: false, reason: "not_configured" };
+  }
+
+  if (!file) {
+    const ok = await sendTelegramText(caption);
+    return ok ? { ok: true } : { ok: false, reason: "telegram_error" };
   }
 
   const photoCaption = caption.slice(0, 1024);

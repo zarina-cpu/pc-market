@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { formatUzs } from "@/lib/money";
 import { productName } from "@/lib/categories";
 import { useCart } from "./CartStore";
@@ -10,14 +11,22 @@ export default function CartView() {
   const t = useTranslations("cart");
   const locale = useLocale();
   const cart = useCart();
+  const params = useSearchParams();
+  const stripeCancelled = params.get("stripe") === "cancel";
 
   if (!cart.ready) return null;
   if (cart.items.length === 0) {
-    return <p>{t("empty")}</p>;
+    return (
+      <div>
+        {stripeCancelled ? <p className="banner warn">{t("stripeCancelled")}</p> : null}
+        <p>{t("empty")}</p>
+      </div>
+    );
   }
 
   return (
     <div>
+      {stripeCancelled ? <p className="banner warn">{t("stripeCancelled")}</p> : null}
       {cart.items.map((item) => (
         <div className="cart-line" key={item.id}>
           <div>
